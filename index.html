@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PainWay</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.4.0/dist/aframe-extras.min.js"></script>
+      <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  </head>
+<body>
+    <a-scene cursor="rayOrigin: mouse" 
+    embedded arjs>
+    
+        <a-assets>
+            <a-asset-item id="coffee-cup" src="Assets/Coffee/coffee.gltf"></a-asset-item> <!--Кофе модель-->
+            <a-asset-item id="coffee-mat" src="Assets/Coffee/coffee.mtl"></a-asset-item> <!--Кофе материал-->
+            <a-asset-item id="glass-cup" src="lim-n.gltf"></a-asset-item>
+            <a-asset-item id="lemon-fruit" src="lemon.glb"></a-asset-item>
+        </a-assets>
+         
+ <a-marker type="pattern" url="pattern-Markerv2.patt" size="0.5">  
+    <a-plane color="white" rotation="-90 0 0" position="0 0 0">   
+        <a-entity id="main-scene" class="block-groups" position="0 0 0" rotation="90 0 0">
+            <a-entity id="coffee-main-group" class="button-groups" gltf-model="#coffee-cup" material="src:#coffee-mat" position="1.45959 0 -0.05153"></a-entity>
+            <a-entity id="limonade-main-group" class="button-groups" gltf-model="#glass-cup" position="-1.90784 0 0"></a-entity>
+            </a-entity>
+        <a-entity id="coffee-main-group" class="block-groups" position="0 0 0">
+            <a-gltf-model id="lemon-main-group" class="button-groups" src="#lemon-fruit" position="0 0 0"></a-gltf-model>
+            </a-entity>
+            </a-plane> 
+</a-marker>
+<a-camera cursor="rayOrigin: mouse" camera="" position="0 1.6 10.07772" rotation="" look-controls="" wasd-controls="" raycaster="direction: -0.42 0.091 -0.903; origin: 4.3551483077522075 9.787404317774476 13.690109795871942; useWorldCoordinates: true" data-aframe-inspector-original-camera=""></a-camera>
+            <script>
+              const mainScene = document.getElementById('main-scene');
+              const blockGroups = document.querySelectorAll('.block-groups');
+          
+              // Установить все block-groups невидимыми, кроме main-scene
+              blockGroups.forEach(blockGroup => {
+                if (blockGroup.id !== 'main-scene') {
+                  blockGroup.setAttribute('visible', false);
+                }
+              });
+          
+              const buttonGroups = document.querySelectorAll('.button-groups');
+          
+              buttonGroups.forEach(buttonGroup => {
+                buttonGroup.addEventListener('click', () => {
+                  blockGroups.forEach(blockGroup => {
+                    if (blockGroup.id.includes(buttonGroup.id)) {
+                      blockGroup.setAttribute('visible', true);
+                    } else {
+                      blockGroup.setAttribute('visible', false);
+                    }
+                  });
+                });
+              });
+            </script>
+        </script>
+        </a-scene>
+</body>
+</html>
