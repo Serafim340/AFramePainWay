@@ -31,29 +31,33 @@
 </a-marker>
 <a-camera cursor="rayOrigin: mouse" camera="" position="0 1.6 10.07772" rotation="" look-controls="" wasd-controls="" raycaster="direction: -0.42 0.091 -0.903; origin: 4.3551483077522075 9.787404317774476 13.690109795871942; useWorldCoordinates: true" data-aframe-inspector-original-camera=""></a-camera>
             <script>
-              const mainScene = document.getElementById('main-scene');
-              const blockGroups = document.querySelectorAll('.block-groups');
-          
-              // Установить все block-groups невидимыми, кроме main-scene
-              blockGroups.forEach(blockGroup => {
-                if (blockGroup.id !== 'main-scene') {
-                  blockGroup.setAttribute('visible', false);
-                }
-              });
-          
-              const buttonGroups = document.querySelectorAll('.button-groups');
-          
-              buttonGroups.forEach(buttonGroup => {
-                buttonGroup.addEventListener('click', () => {
-                  blockGroups.forEach(blockGroup => {
-                    if (blockGroup.id.includes(buttonGroup.id)) {
-                      blockGroup.setAttribute('visible', true);
-                    } else {
-                      blockGroup.setAttribute('visible', false);
-                    }
-                  });
-                });
-              });
+if ('ontouchstart' in window) { // Код для сенсорных экранов
+ 
+  buttonGroups.forEach(buttonGroup => {
+    buttonGroup.addEventListener('touchstart', () => {
+      blockGroups.forEach(blockGroup => {
+        if (blockGroup.id.includes(buttonGroup.id)) {
+          blockGroup.setAttribute('visible', true);
+        } else {
+          blockGroup.setAttribute('visible', false);
+        }
+      });
+    });
+  });
+} else { // Код для устройств с мышью
+ 
+  buttonGroups.forEach(buttonGroup => {
+    buttonGroup.addEventListener('click', () => {
+      blockGroups.forEach(blockGroup => {
+        if (blockGroup.id.includes(buttonGroup.id)) {
+          blockGroup.setAttribute('visible', true);
+        } else {
+          blockGroup.setAttribute('visible', false);
+        }
+      });
+    });
+  });
+}
             </script>
         </script>
         </a-scene>
